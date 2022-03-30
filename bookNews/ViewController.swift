@@ -17,21 +17,15 @@ class ViewController: UIViewController{
  
     
     
-    var correo : UITextField?
+    var email : UITextField?
     var pasword : UITextField?
-    var defaults = UserDefaults.standard
     var nextButton: UIButton?
-    var userLabel : UILabel?
     var botonSesion : UIButton?
     var botonRegistrate : UIButton?
-    var botonLogout : UIButton?
-    var nextLabel : UILabel?
-   
-    
-    
-   
-    
-    
+    var viewBack: UIView?
+    var welcomeLabel: UILabel?
+    var userLogin : UILabel?
+
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -39,102 +33,150 @@ class ViewController: UIViewController{
         
         initUI()
         
-        
-        
-
-        
+       
             
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let name : String? = UserDefaults.standard.object(forKey: "name") as? String
+        
+        if let nameToDisplay = name {
+            userLogin?.text = nameToDisplay
+           userLogin?.font = .boldSystemFont(ofSize: 12)
+            
+            
+        }
     }
     
     
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func saveUser () {
+        
+        UserDefaults.standard.set(email?.text, forKey: "name")
+        
+        
+    }
+    
+    
+    
+    
+    func configureTextFields(){
+        email?.delegate = self
+        pasword?.delegate = self
+        
+    }
+    
     func initUI(){
         
-        var topImageView : UIImageView?
-        var imagenlibro : UIImageView?
-        
-        
+               
         var width = UIScreen.main.bounds.width
         var height = UIScreen.main.bounds.height
+        view.backgroundColor = .white
+     
+        
+        
+        viewBack = UIView(frame: CGRect(x: 0, y: 0, width: width , height: height - 200 ))
+        viewBack?.backgroundColor = Constants.Storyboard.backgroundColor
+        view.addSubview(viewBack!)
+        
+        //userLogin = UILabel(frame: CGRect(x: width / 2, y: 20, width: width , height: 20 ))
+        //userLogin?.textColor = .red
+        //viewBack?.addSubview(userLogin!)
         
         
         
-       
-        topImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height/3))
-        topImageView?.image = UIImage(named: "topimage")
-        view.addSubview(topImageView!)
+        welcomeLabel = UILabel(frame: CGRect(x: 20, y: 20, width: width / 2 , height: 50))
+        welcomeLabel?.text = "Bienvenido"
+        welcomeLabel?.backgroundColor = .clear
+        welcomeLabel?.textAlignment = .center
+        welcomeLabel?.font = .boldSystemFont(ofSize: 30)
+        viewBack?.addSubview(welcomeLabel!)
+        welcomeLabel?.center = CGPoint (x: width / 2, y : 100)
         
-        correo = UITextField(frame: CGRect(x: 20, y: 220, width: width - 40, height: 50))
-        correo?.backgroundColor = .white
-        correo?.placeholder = "  Ingresa tu Usuario"
-        correo?.layer.borderColor = UIColor.blue.cgColor
-        correo?.layer.borderWidth = 1
-        correo?.layer.cornerRadius = 7
-        view.addSubview(correo!)
+        email = UITextField()
+        email?.backgroundColor = .white
+        email?.placeholder = "  Ingresa tu Usuario"
+        email?.layer.borderColor = UIColor.blue.cgColor
+        email?.layer.borderWidth = 1
+        email?.layer.cornerRadius = 7
+        email?.translatesAutoresizingMaskIntoConstraints = false
+        viewBack?.addSubview(email!)
+        email?.addAnchorsAndSize(width: width / 2, height: 50, left: 20, top: 40, right: 20, bottom: nil, withAnchor: .top, relativeToView: welcomeLabel)
+
         
         
-        pasword = UITextField(frame: CGRect(x: 20, y: 290, width: width - 40, height: 50))
+        pasword = UITextField()
+        pasword?.center = CGPoint(x: width / 2, y: 290)
         pasword?.backgroundColor = .white
         pasword?.placeholder = "  Ingresa Password"
         pasword?.layer.borderColor = UIColor.blue.cgColor
         pasword?.isSecureTextEntry = true
         pasword?.layer.borderWidth = 1
         pasword?.layer.cornerRadius = 7
+        viewBack?.addSubview(pasword!)
+        pasword?.addAnchorsAndSize(width: width / 2, height: 50, left: 20, top: 10, right: 20, bottom: nil, withAnchor: .top, relativeToView: email)
        
-        view.addSubview(pasword!)
+      
         
-        botonSesion = UIButton (frame: CGRect(x: 20, y: 450, width: width - 200, height: 40))
+        botonSesion = UIButton()
         botonSesion?.backgroundColor = .blue
+        botonSesion?.center = CGPoint(x: width / 2, y: 360)
         botonSesion?.tintColor = .white
         botonSesion?.layer.cornerRadius = 7
         botonSesion?.setTitle("Login", for: .normal)
         botonSesion?.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
-        
         view.addSubview(botonSesion!)
-        
-        
-        
-        botonRegistrate = UIButton (frame: CGRect(x: 170, y: 450, width: width - 200, height: 40))
+        botonSesion?.addAnchorsAndSize(width: width / 2, height: 40, left: 20, top: 20, right: width / 2 , bottom: nil, withAnchor: .top, relativeToView: pasword)
+
+   
+        botonRegistrate = UIButton()
         botonRegistrate?.backgroundColor = .purple
+        botonRegistrate?.center = CGPoint(x: width / 2, y: 420)
         botonRegistrate?.layer.cornerRadius = 7
         botonRegistrate?.tintColor = .white
         botonRegistrate?.setTitle("Sign in", for: .normal)
-        botonRegistrate?.addTarget(self, action: #selector(registrarAction), for: .touchUpInside)
-        
-       view.addSubview(botonRegistrate!)
+        botonRegistrate?.addTarget(self, action: #selector(registerAction), for: .touchUpInside)
+        view.addSubview(botonRegistrate!)
+        botonRegistrate?.addAnchorsAndSize(width: width / 2, height: 40, left: width / 2 , top: 20, right: 20  , bottom: nil, withAnchor: .top, relativeToView: pasword)
             
     }
    
    
-    @objc func registrarAction(){
+    @objc func registerAction(){
         
     
         
-        print("Button Press")
-        let registro = RegistroViewController()
-        registro.modalPresentationStyle = .fullScreen
-        present(registro, animated: true, completion: {
-            print("Ya se termino de presentar :)")
-        }) // Aqui presentamos el viewController, animado y sin usar completion
+        
+        let register = RegisterViewController()
+        register.modalPresentationStyle = .fullScreen
+        present(register, animated: false, completion: nil )
         
         
     }
     
-    @objc func nextView(){
+    @objc func nextDashBoard(){
         let register =  DashBoardViewController()
         register.modalPresentationStyle = .fullScreen
         present(register, animated: true, completion: nil)
       }
     
     
+    
+    
+    
     @objc func loginAction(){
         
-        if let email = correo?.text , let password = pasword?.text {
+        if let email = email?.text , let password = pasword?.text {
         
         Auth.auth().signIn(withEmail: email ?? "", password: password ?? "") { authResult, error in
             if let result = authResult?.user, error == nil  {
-                                
-                self.nextView()
+                self.saveUser()
+                self.nextDashBoard()
                 
             }else {
                 print ("Error\(error?.localizedDescription)")
@@ -144,25 +186,24 @@ class ViewController: UIViewController{
                 
             self.present(alertController, animated: true, completion: nil )
                 
+                }
+            
+            
             }
-            
-            
-        }
             
           
             
         }
    
-    
-    
         
     }
-    
-    
-    
-    
-    
-   
-    
 
+}
+
+extension ViewController : UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

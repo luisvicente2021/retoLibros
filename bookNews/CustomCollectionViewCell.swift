@@ -33,6 +33,7 @@ class CustomCollectionViewCell : UICollectionViewCell{
         let label = UILabel ()
         label.text = ""
         label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 10)
         return label
         
         
@@ -59,7 +60,10 @@ class CustomCollectionViewCell : UICollectionViewCell{
         super.layoutSubviews()
         
         newsImageVeiw.frame = CGRect(x : contentView.frame.size.width - 150, y:9, width: 140 , height: contentView.frame.size.height - 40)
-        myLabel.addAnchorsAndSize(width: nil, height: height / 5, left: 0, top:90, right: 20, bottom: nil, withAnchor: nil, relativeToView: newsImageVeiw)
+        
+       // myLabel.frame = CGRect(x : contentView.frame.size.width - 150, y:100, width: 140 , height: contentView.frame.size.height - 40)
+        
+        myLabel.addAnchorsAndSize(width: nil, height: nil, left: 0, top:10, right: nil, bottom: nil, withAnchor: .top, relativeToView: newsImageVeiw)
         
         
         

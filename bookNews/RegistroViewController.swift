@@ -9,160 +9,123 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class RegistroViewController: UIViewController {
+class RegisterViewController: UIViewController {
 
-    var topImageView : UIImageView?
+    
     
     var width = UIScreen.main.bounds.width
     var height = UIScreen.main.bounds.height
-    var backgroundColor = UIColor(displayP3Red: 63/255, green: 193/255, blue: 219/255, alpha: 1)
-    var identifier = "RegistroViewController"
+   
     
     //MARK: - Definicion del primer elemento
-    var productContentView : UIView?
-    var descriptionView : UIView?
-    var productImage : UIImageView?
-    var productCard : UIView?
-    var productCard2 : UIView?
-    var registraTuInfo : UILabel?
+
+    
     var info : UILabel?
     var productPrice : UILabel?
     var textDescripcion : UILabel?
     var descripcion : UILabel?
-    var defaults = UserDefaults.standard
-    var usuarioTextField : UITextField?
-    var correoTextField : UITextField?
+    var userTextField : UITextField?
+    var emailTextField : UITextField?
     var passwordTextField : UITextField?
-    var confirmarTextField : UITextField?
     var crearCuenta : UIButton?
+    var viewBack: UIView?
+    var userLogin: UILabel?
    
     
     var backButton : UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = backgroundColor
         
         initUI()
         configureTextFields()
     }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func configureTextFields(){
-        usuarioTextField?.delegate = self
-        correoTextField?.delegate = self
+        userTextField?.delegate = self
+        emailTextField?.delegate = self
         passwordTextField?.delegate = self
-        //confirmarTextField?.delegate = self
-            
-        
         
     }
     
-    func userLogged(name : String, pass : String){
-        
-         let inicio = ViewController ()
-            print("Back")
-            dismiss(animated: true)
-         //inicio.modalPresentationStyle = .fullScreen
-         //present(inicio, animated: true, completion: {
-        //print("Volvenos a Login :)")})
-        
-    }
+   
+    
+    
+    
+    
+    
     
     
     func initUI(){
-        topImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: width , height: height/4))
-        topImageView?.image = UIImage(named: "userNew")
-        view.addSubview(topImageView!)
+        view.backgroundColor = .white
+        viewBack = UIView(frame: CGRect(x: 0, y: 0, width: width , height: height - 200 ))
+        viewBack?.backgroundColor = Constants.Storyboard.backgroundColor
+        view.addSubview(viewBack!)
         
-        backButton = UIButton(frame: CGRect(x: 4, y: 100, width: 40, height: 40))
-        //backButton?.setTitle("Regresar", for: .normal)
+        userLogin = UILabel(frame: CGRect(x: width / 2, y: 20, width: width , height: 20 ))
+        userLogin?.text = ViewController().userLogin?.text
+        viewBack?.addSubview(userLogin!)
+        
+        backButton = UIButton(frame: CGRect(x: 4, y: 20, width: 40, height: 40))
         backButton?.setImage(UIImage(named: "back"), for: .normal)
         backButton?.addTarget(self, action:#selector(backAction) , for: .touchUpInside)
-        view.addSubview(backButton!)
-        
-        createProductView()
-        
-    }
-    
-    
-    
-    
-    func createProductView(){
+        viewBack?.addSubview(backButton!)
         
         
-       // info = UILabel(frame: CGRect(x: 0, y:80 , width: (width - 40) , height: 30))
-        //info?.text = "Estas a unos pasos de vivir la mejor experiencia"
-        //info?.backgroundColor = .clear
-        //info?.textAlignment = .center
-        //info?.font = .boldSystemFont(ofSize: 10)
-        //view?.addSubview(info!)
+        info = UILabel()
+        info?.text = "Resgistra tu informacion"
+        info?.backgroundColor = .clear
+        info?.textAlignment = .center
+        info?.font = .boldSystemFont(ofSize: 20)
+        viewBack?.addSubview(info!)
+        info?.addAnchorsAndSize(width: width / 2, height: 50, left: 20, top: 50, right: 20, bottom: nil, withAnchor: nil, relativeToView: nil)
         
-         
+  
         
+        userTextField = UITextField(frame: CGRect(x: 20, y: 110, width: width - 40, height: 40))
+        userTextField?.backgroundColor = .white
+        userTextField?.placeholder = "  Ingresa tu Usuario"
+        userTextField?.layer.borderColor = UIColor.blue.cgColor
+        userTextField?.layer.borderWidth = 1
+        userTextField?.layer.cornerRadius = 7
+        viewBack?.addSubview(userTextField!)
         
+        emailTextField = UITextField(frame: CGRect(x: 20, y: 160, width: width - 40, height: 40))
+        emailTextField?.backgroundColor = .white
+        emailTextField?.placeholder = "  Ingresa tu Correo"
+        emailTextField?.layer.borderColor = UIColor.blue.cgColor
+        emailTextField?.layer.borderWidth = 1
+        emailTextField?.layer.cornerRadius = 7
+        viewBack?.addSubview(emailTextField!)
         
-        
-       // registraTuInfo = UILabel(frame: CGRect(x: 0 + 30, y:10 , width: (width - 40) , height: 30))
-        //registraTuInfo?.text = "Registra tu informacion"
-        //registraTuInfo?.backgroundColor = .clear
-        //registraTuInfo?.textAlignment = .center
-        //registraTuInfo?.font = .boldSystemFont(ofSize: 16)
-        //view?.addSubview(registraTuInfo!)
-        
-        
-        //var usuarioTextField : UITextField?
-        //var correoTextField : UITextField?
-        //var passwordTextField : UITextField?
-        //var confirmarTextField : UITextField?
-        
-        usuarioTextField = UITextField(frame: CGRect(x: 20, y: 150, width: width - 40, height: 40))
-       usuarioTextField?.backgroundColor = .white
-        usuarioTextField?.placeholder = "  Ingresa tu Usuario"
-        usuarioTextField?.layer.borderColor = UIColor.blue.cgColor
-        usuarioTextField?.layer.borderWidth = 1
-        usuarioTextField?.layer.cornerRadius = 7
-        view.addSubview(usuarioTextField!)
-        
-        correoTextField = UITextField(frame: CGRect(x: 20, y: 210, width: width - 40, height: 40))
-        correoTextField?.backgroundColor = .white
-        correoTextField?.placeholder = "  Ingresa tu Correo"
-        correoTextField?.layer.borderColor = UIColor.blue.cgColor
-        correoTextField?.layer.borderWidth = 1
-        correoTextField?.layer.cornerRadius = 7
-        view.addSubview(correoTextField!)
-        
-        passwordTextField = UITextField(frame: CGRect(x: 20, y: 270, width: width - 40, height: 40))
+        passwordTextField = UITextField(frame: CGRect(x: 20, y: 210, width: width - 40, height: 40))
         passwordTextField?.backgroundColor = .white
         passwordTextField?.placeholder = "  Ingresa tu Password"
         passwordTextField?.layer.borderColor = UIColor.blue.cgColor
         passwordTextField?.layer.borderWidth = 1
-        //passwordTextField?.isSecureTextEntry = true
+        passwordTextField?.isSecureTextEntry = true
         passwordTextField?.layer.cornerRadius = 7
         view.addSubview(passwordTextField!)
         
+  
         
-        
-        
-        
-        
-        
-       
-        
-        
-        
-       
-        
-        crearCuenta = UIButton(frame: CGRect(x: 60, y: 450, width: width - 120, height: 40))
-        crearCuenta?.backgroundColor = .blue
-        
+     
+        crearCuenta = UIButton()
+        crearCuenta?.backgroundColor = .purple
         crearCuenta?.tintColor = .white
         crearCuenta?.layer.cornerRadius = 7
         
-        crearCuenta?.setTitle("CREAR CUENTA", for: .normal)
+        crearCuenta?.setTitle("Crear Cuenta", for: .normal)
         
         crearCuenta?.addTarget(self, action: #selector(registrarAction), for: .touchUpInside)
         
         view.addSubview(crearCuenta!)
+        crearCuenta?.addAnchorsAndSize(width: width - 40, height: 40, left: 20, top: 10, right: 20, bottom: nil, withAnchor: .top, relativeToView: passwordTextField)
         
         
     }
@@ -171,7 +134,7 @@ class RegistroViewController: UIViewController {
     
     
     @objc func registrarAction(){
-        if correoTextField?.text?.isEmpty == true {
+        if emailTextField?.text?.isEmpty == true {
             print ("No hay texto")
             return
         }
@@ -187,12 +150,12 @@ class RegistroViewController: UIViewController {
     
     func signUp() {
         
-        if let email = correoTextField?.text , let password = passwordTextField?.text {
+        if let email = emailTextField?.text , let password = passwordTextField?.text {
         
-        Auth.auth().createUser(withEmail: correoTextField?.text ?? "", password: passwordTextField?.text ?? "") { authResult, error in
+        Auth.auth().createUser(withEmail: emailTextField?.text ?? "", password: passwordTextField?.text ?? "") { authResult, error in
             if let result = authResult?.user, error == nil  {
                                 
-                print("Back")
+            print("Back")
             self.dismiss(animated: true)
                 
                 
@@ -222,37 +185,15 @@ class RegistroViewController: UIViewController {
     
     @objc func backAction(){
         print("Back")
-        dismiss(animated: true)
+        dismiss(animated: false)
     }
     
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    ///
-    
-    
+ 
 
 }
 
-extension RegistroViewController : UITextFieldDelegate{
+
+extension RegisterViewController : UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

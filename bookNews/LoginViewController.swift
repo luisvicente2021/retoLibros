@@ -94,9 +94,10 @@ class LoginViewController: UIViewController {
        
         view.addSubview(pasword!)
         
+        botonSesion?.translatesAutoresizingMaskIntoConstraints = false
         
         botonSesion = UIButton (frame: CGRect(x: 100, y: width / 4, width: width - 200, height: 40))
-        botonSesion = UIButton()
+       
         botonSesion?.backgroundColor = .blue
         botonSesion?.tintColor = .white
         botonSesion?.layer.cornerRadius = 7
@@ -127,9 +128,9 @@ class LoginViewController: UIViewController {
     
         
         print("Button Press")
-        let registro = RegistroViewController()
-        registro.modalPresentationStyle = .fullScreen
-        present(registro, animated: true, completion: {
+        let register = RegisterViewController()
+        register.modalPresentationStyle = .fullScreen
+        present(register, animated: true, completion: {
             print("Ya se termino de presentar :)")
         }) // Aqui presentamos el viewController, animado y sin usar completion
         

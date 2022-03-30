@@ -18,9 +18,15 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
     
     private lazy var segmentedControl: UISegmentedControl = { let sc = UISegmentedControl(items: ["Noticias","Imagenes","Salir"])
         sc.selectedSegmentIndex = 0
+        sc.backgroundColor = Constants.Storyboard.kodemiaCyanFaded
         sc.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
         return sc
     }()
+    
+   // var segmentedControl : UISegmentedControl?
+    //sc = UISegmentedControl()
+    //sc?.selectedSegmentIndex = 0
+    //sc?.backgroundColor : .blue
     
     @objc fileprivate func handleSegmentChange () {
         print (segmentedControl.selectedSegmentIndex)
@@ -38,13 +44,12 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
             
         }
         else if segmentedControl.selectedSegmentIndex == 2{
-        
-            
+            hideTableView()
             do{
                 try FirebaseAuth.Auth.auth().signOut()
-                let login = LoginViewController()
+                let login = ViewController()
                 login.modalPresentationStyle = .fullScreen
-                present(login, animated: true, completion: nil)
+                present(login, animated: false, completion: nil)
                 
             }catch {
                 
@@ -61,11 +66,13 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
         let table = UITableView()
         table.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.identifier)
         
+        
         return table
     }()
     
      var articles = [Article]()
      var viewModels = [NewsTableViewCellViewModel]()
+    var userLogin : UILabel?
      
 
     override func viewDidLoad() {
@@ -75,17 +82,23 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
         
         
         
-        view.addSubview(segmentedControl)
         
-        
-        segmentedControl.addAnchors(left: 20, top: nil, right: 20, bottom: 70, withAnchor: nil, relativeToView: tableView)
-        
-        view.addSubview(tableView)
+       
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.addAnchorsAndSize(width: nil, height: nil, left: 20, top: 15, right: 20, bottom: 120, withAnchor: nil, relativeToView: nil)
-        view.backgroundColor = .systemBackground
+        view.addSubview(tableView)
+        
+        userLogin = UILabel(frame: CGRect(x: width / 2, y: 20, width: width , height: 20 ))
+        userLogin?.textColor = .red
+        view?.addSubview(userLogin!)
+        
+        tableView.addAnchorsAndSize(width: nil, height: nil, left: 20, top: 60, right: 20, bottom: 90, withAnchor: nil, relativeToView: segmentedControl)
+        view.backgroundColor = .white
+        
+        view.addSubview(segmentedControl)
+        segmentedControl.addAnchors(left: 20, top: nil, right: 20, bottom: 70, withAnchor: nil, relativeToView: tableView)
+        
         fetchTopStories ()
             
     }
@@ -103,6 +116,11 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
         super.viewDidLayoutSubviews()
         //tableView.frame = view.bounds
     }
+    
+    
+    
+    
+    
     
     
      func fetchTopStories (){

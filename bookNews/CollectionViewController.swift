@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class CollectionViewController: UIViewController{
     
@@ -21,18 +22,36 @@ class CollectionViewController: UIViewController{
         print (segmentedControl.selectedSegmentIndex)
         
         
-        if segmentedControl.selectedSegmentIndex == 0{
+        if segmentedControl.selectedSegmentIndex == 0 {
+            DashBoardViewController().hideTableView()
             let dash = DashBoardViewController()
             dash.modalPresentationStyle = .fullScreen
-            present(dash, animated: true, completion: nil)
+            present(dash, animated: false, completion: nil)
             
         }
         else if segmentedControl.selectedSegmentIndex == 1{
-           // hideTableView()
+           
            
             
         }
-        else if segmentedControl.selectedSegmentIndex == 2{}
+        else if segmentedControl.selectedSegmentIndex == 2{
+            
+            do{
+                try FirebaseAuth.Auth.auth().signOut()
+                let login = ViewController()
+                login.modalPresentationStyle = .fullScreen
+                present(login, animated: false, completion: nil)
+                
+            }catch {
+                
+                
+            }
+            
+            
+            
+            
+        }
+        
     }
     
     var  prueba = CustomCollectionViewCell()
@@ -42,14 +61,15 @@ class CollectionViewController: UIViewController{
  
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .white
         view.addSubview(segmentedControl)
         
         
         segmentedControl.addAnchors(left: 20, top: nil, right: 20, bottom: 70, withAnchor: nil, relativeToView: nil)
         
        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
+        
         layout.minimumLineSpacing = 4
         layout.minimumInteritemSpacing = 4
         layout.itemSize = CGSize(width: view.frame.size.width / 2, height: view.frame.size.width / 2)
@@ -65,7 +85,7 @@ class CollectionViewController: UIViewController{
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        view.backgroundColor = .white
+        
         view.addSubview(collectionView)
         collectionView.frame = view.bounds
         
@@ -74,7 +94,7 @@ class CollectionViewController: UIViewController{
         
        
         
-        collectionView.addAnchorsAndSize(width: nil, height: height / 5, left: 0, top: 50, right: 20, bottom: 120, withAnchor: nil, relativeToView: segmentedControl)
+        collectionView.addAnchorsAndSize(width: nil, height: height / 5, left: 20, top: 50, right: 20, bottom: 120, withAnchor: nil, relativeToView: segmentedControl)
        
         fetchTopStories ()
     

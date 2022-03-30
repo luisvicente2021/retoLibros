@@ -157,6 +157,10 @@ public extension UIView {
 
 
 
+//correo?.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//correo?.topAnchor.constraint(equalTo: view.topAnchor, constant: height / 3).isActive = true
+//correo?.widthAnchor.constraint(equalToConstant: width - 40).isActive = true
+//correo?.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
 
 
