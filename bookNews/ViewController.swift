@@ -36,6 +36,7 @@ class ViewController: UIViewController{
        
             
     }
+    //here iam make usersDefaults
     
     override func viewDidAppear(_ animated: Bool) {
         let name : String? = UserDefaults.standard.object(forKey: "name") as? String
@@ -48,7 +49,7 @@ class ViewController: UIViewController{
         }
     }
     
-    
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -71,6 +72,8 @@ class ViewController: UIViewController{
         
     }
     
+    // i am make the layout  with constrains : Lbels, bottons, TextFields
+    
     func initUI(){
         
                
@@ -84,9 +87,6 @@ class ViewController: UIViewController{
         viewBack?.backgroundColor = Constants.Storyboard.backgroundColor
         view.addSubview(viewBack!)
         
-        //userLogin = UILabel(frame: CGRect(x: width / 2, y: 20, width: width , height: 20 ))
-        //userLogin?.textColor = .red
-        //viewBack?.addSubview(userLogin!)
         
         
         
@@ -146,18 +146,18 @@ class ViewController: UIViewController{
             
     }
    
-   
-    @objc func registerAction(){
-        
+   // here you go to view Register
     
-        
-        
+    @objc func registerAction(){
+           
         let register = RegisterViewController()
         register.modalPresentationStyle = .fullScreen
         present(register, animated: false, completion: nil )
         
         
     }
+    
+    // here you go to view Dashboard
     
     @objc func nextDashBoard(){
         let register =  DashBoardViewController()
@@ -199,6 +199,8 @@ class ViewController: UIViewController{
     }
 
 }
+
+// i am make extension for to use delegate of TextFields
 
 extension ViewController : UITextFieldDelegate{
     

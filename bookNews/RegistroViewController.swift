@@ -57,7 +57,7 @@ class RegisterViewController: UIViewController {
     
     
     
-    
+    // iam layout of labels, button, textfields,views
     
     
     
@@ -71,7 +71,7 @@ class RegisterViewController: UIViewController {
         userLogin?.text = ViewController().userLogin?.text
         viewBack?.addSubview(userLogin!)
         
-        backButton = UIButton(frame: CGRect(x: 4, y: 20, width: 40, height: 40))
+        backButton = UIButton(frame: CGRect(x: 4, y: 30, width: 40, height: 40))
         backButton?.setImage(UIImage(named: "back"), for: .normal)
         backButton?.addTarget(self, action:#selector(backAction) , for: .touchUpInside)
         viewBack?.addSubview(backButton!)

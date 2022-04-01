@@ -3,7 +3,8 @@
 //  bookNews
 //
 //  Created by user209759 on 3/24/22.
-//
+
+// here make the model for Json
 
 import Foundation
 

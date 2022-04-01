@@ -3,7 +3,8 @@
 //  bookNews
 //
 //  Created by user209759 on 3/24/22.
-//
+
+// i am create conexion with api News
 
 import Foundation
 
@@ -18,7 +19,7 @@ final class ApiCaller{
     
     
     struct Constants {
-        static let topHeadlinesURL = URL (string: "https://newsapi.org/v2/everything?q=tesla&from=2022-02-28&sortBy=publishedAt&apiKey=8164f3d5d95047939b61a9cdae36e3c7")
+        static let topHeadlinesURL = URL (string: "https://newsapi.org/v2/everything?q=apple&from=2022-03-31&to=2022-03-31&sortBy=popularity&apiKey=8164f3d5d95047939b61a9cdae36e3c7")
         
     }
     
@@ -38,7 +39,7 @@ final class ApiCaller{
             
             if let error = error {
                completion(.failure(error))
-                print ("estas mallll perro")
+               
                 print(completeURL)
                 
             }
@@ -47,13 +48,13 @@ final class ApiCaller{
                 do{
                     let result = try JSONDecoder().decode(ApiResponse.self, from: data)
                     
-                    print("Noticias")
+                    print("News")
                     print ([result].count)
                     completion(.success(result.articles))
                 }
                 catch {
                     
-                    print ("Estas mal perro")
+                   
                     completion(.failure(error))
                     
                 }

@@ -23,10 +23,8 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
         return sc
     }()
     
-   // var segmentedControl : UISegmentedControl?
-    //sc = UISegmentedControl()
-    //sc?.selectedSegmentIndex = 0
-    //sc?.backgroundColor : .blue
+   
+   // i am make functions of segmentedControl
     
     @objc fileprivate func handleSegmentChange () {
         print (segmentedControl.selectedSegmentIndex)
@@ -81,7 +79,7 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
         title = "News"
         
         
-        
+        // i am make layout of labels, tablew view
         
        
         
@@ -114,7 +112,7 @@ class DashBoardViewController: UIViewController, UITableViewDelegate,UITableView
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //tableView.frame = view.bounds
+
     }
     
     

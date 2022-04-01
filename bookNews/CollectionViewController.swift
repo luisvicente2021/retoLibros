@@ -4,7 +4,7 @@
 //
 //  Created by user209759 on 3/27/22.
 //
-
+import SafariServices
 import UIKit
 import FirebaseAuth
 
@@ -157,7 +157,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
     
        
         cell.configure(with: viewModels[indexPath.row])
-        print ("Peroo\(indexPath.row)")
+      
         
         
         
@@ -174,7 +174,24 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
     
     
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
+        var articles = articles [indexPath.row]
+        
+        print ("Seleccionaste \(articles.title)")
+        
+        guard let url = URL (string: articles.url ?? "") else {
+            
+            return
+            
+        }
+        
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true)
+        
+        
+        
+    }
     
 }
 
